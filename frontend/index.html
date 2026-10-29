@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прокат Оборудования - Каталог</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Каталог оборудования</h1>
+            <div id="auth-panel">
+                <!-- Заполняется через JS -->
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+            <input type="text" id="search" placeholder="Поиск по названию..." oninput="loadEquipment()">
+            <select id="category-filter" onchange="loadEquipment()">
+                <option value="">Все категории</option>
+                <option value="Спортивное">Спортивное</option>
+                <option value="Строительное">Строительное</option>
+                <option value="Туристическое">Туристическое</option>
+            </select>
+        </div>
+
+        <div class="grid" id="catalog"></div>
+    </div>
+
+    <!-- Модалка Авторизации -->
+    <!-- Модалка ВХОДА -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <h3>Вход в систему</h3>
+            <input type="text" id="login-username" placeholder="Логин">
+            <input type="password" id="login-password" placeholder="Пароль">
+            <button class="btn" style="width: 100%; margin-top: 10px;" onclick="doLogin()">Войти</button>
+            <p style="text-align: center; margin-top: 10px; font-size: 0.9em;">
+                Нет аккаунта? <a href="#" onclick="switchModal('login-modal', 'register-modal')">Зарегистрироваться</a>
+            </p>
+            <button class="btn btn-grey" style="width: 100%;" onclick="closeModal('login-modal')">Отмена</button>
+        </div>
+    </div>
+
+    <!-- Модалка РЕГИСТРАЦИИ -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <h3>Регистрация клиента</h3>
+            <input type="text" id="reg-username" placeholder="Придумайте логин">
+            <input type="password" id="reg-password" placeholder="Придумайте пароль">
+            <button class="btn btn-success" style="width: 100%; margin-top: 10px;" onclick="doRegister()">Создать аккаунт</button>
+            <p style="text-align: center; margin-top: 10px; font-size: 0.9em;">
+                Уже есть аккаунт? <a href="#" onclick="switchModal('register-modal', 'login-modal')">Войти</a>
+            </p>
+            <button class="btn btn-grey" style="width: 100%;" onclick="closeModal('register-modal')">Отмена</button>
+        </div>
+    </div>
+
+    <!-- Модалка Бронирования -->
+    <div class="modal" id="booking-modal">
+        <div class="modal-content">
+            <h3>Бронирование</h3>
+            <p><b id="eq-name"></b></p>
+            <label>Дата начала:</label>
+            <input type="date" id="start-date" onchange="calcPrice()">
+            <label>Дата окончания:</label>
+            <input type="date" id="end-date" onchange="calcPrice()">
+            <p style="font-size: 1.2em;">Итого: <b><span id="total-price">0</span> руб.</b></p>
+            <button class="btn btn-success" style="width: 100%;" onclick="submitBooking()">Подтвердить</button>
+            <button class="btn btn-grey" style="width: 100%; margin-top: 5px;" onclick="closeModal('booking-modal')">Отмена</button>
+        </div>
+    </div>
+
+    <div class="modal" id="my-bookings-modal">
+        <div class="modal-content" style="width: 600px;">
+            <h3>История моих аренд</h3>
+            <table style="font-size: 0.9em;">
+                <thead><tr><th>Оборудование</th><th>Даты</th><th>Сумма</th><th>Статус</th></tr></thead>
+                <tbody id="my-bookings-body"></tbody>
+            </table>
+            <button class="btn btn-grey" style="width: 100%; margin-top: 10px;" onclick="closeModal('my-bookings-modal')">Закрыть</button>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/client.js"></script>
+</body>
+</html>

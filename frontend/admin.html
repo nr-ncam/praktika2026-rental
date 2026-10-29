@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Панель управления</h1>
+            <div>
+                <a href="/index.html" class="btn btn-grey" style="text-decoration:none;">На главную</a>
+                <button class="btn btn-danger" onclick="logout()">Выйти</button>
+            </div>
+        </div>
+
+        <div id="admin-stats-block" style="display: none; margin-bottom: 30px; background: white; padding: 20px; border-radius: 10px;">
+            <h2>Статистика и Аналитика</h2>
+            <div style="display: flex; gap: 20px; margin-top: 15px;">
+                <div><b>Всего броней:</b> <span id="stat-total">0</span></div>
+                <div><b>Выручка:</b> <span id="stat-revenue">0</span> руб.</div>
+                <div><b>Штрафы:</b> <span id="stat-penalties">0</span> руб.</div>
+            </div>
+            <canvas id="statsChart" style="max-height: 300px; margin-top: 20px;"></canvas>
+        </div>
+
+        <!-- Блок Администратора (Управление складом) -->
+        <div id="admin-only-block" style="display: none; background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+            <h2>Управление складом</h2>
+            <!-- Форма добавления -->
+            <div style="display: flex; gap: 10px; margin-top: 15px; margin-bottom: 20px;">
+                <input type="text" id="eq-name" placeholder="Название">
+                <input type="text" id="eq-category" placeholder="Категория">
+                <input type="number" id="eq-price" placeholder="Цена/день">
+                <input type="number" id="eq-qty" placeholder="Кол-во">
+                <button class="btn btn-success" onclick="addEquipment()">Добавить</button>
+            </div>
+
+            <!-- Таблица товаров для редактирования -->
+            <table>
+                <thead><tr><th>ID</th><th>Название</th><th>Категория</th><th>Цена</th><th>Кол-во</th><th>Состояние</th><th>Действия</th></tr></thead>
+                <tbody id="equipment-table-body"></tbody>
+            </table>
+        </div>
+
+        <div id="admin-users-block" style="display: none; margin-top: 40px;">
+            <h2>Управление пользователями</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Логин</th>
+                        <th>Текущая роль</th>
+                        <th>Изменить роль</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body"></tbody>
+            </table>
+        </div>
+
+        <!-- Блок Менеджера (Все бронирования) -->
+        <h2>Управление бронированиями</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Клиент</th>
+                    <th>Оборудование</th>
+                    <th>Даты</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody id="bookings-table-body"></tbody>
+        </table>    
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+</html>
